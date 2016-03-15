@@ -1,4 +1,8 @@
 node_modules/
+bower_components/
+build/
+tmp/
+.env
 
 .DS_Store
 .AppleDouble

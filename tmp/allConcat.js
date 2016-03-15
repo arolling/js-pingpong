@@ -3,6 +3,7 @@ var pingPong = require('./../js/ping-pong.js').pingPong;
 $(document).ready(function(){
   $('#ping-pong').submit(function(event){
     event.preventDefault();
+    $('#solution').empty();
     var goal = $('#goal').val();
     var output = pingPong(goal);
     output.forEach(function(element){
@@ -18,5 +19,25 @@ $(document).ready(function(){
     var email = $('#email').val();
     $('#signup').hide();
     $('#solution').prepend('<p>Thank you, ' + email + ' has been added to our list!</p>');
+  });
+});
+
+$(document).ready(function(){
+  $('#time').text(moment());
+  console.log(moment());
+});
+
+var apiKey = require('./../.env').apiKey;
+$(document).ready(function() {
+  $('#weatherLocation').click(function() {
+    var city = $('#location').val();
+    $('#location').val("");
+    $.get('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + apiKey).then(function(response) {
+      console.log(response);
+      $('.showWeather').text("The humidity in " + city + " is " + response.main.humidity + "%");
+    }).fail(function(error) {
+      $('.showWeather').text(error.message);
+    });
+    console.log("Notice: The GET request has been made.");
   });
 });
